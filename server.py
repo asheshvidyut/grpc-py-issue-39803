@@ -72,8 +72,8 @@ async def serve():
     server = aio.server(
         ThreadPoolExecutor(max_workers=10),
         options=[
-            ('grpc.max_send_message_length', 100 * 1024 * 1024),  # 100MB
-            ('grpc.max_receive_message_length', 100 * 1024 * 1024),  # 100MB
+            ('grpc.max_send_message_length', 1048 * 1024 * 1024),  # 100MB
+            ('grpc.max_receive_message_length', 1048 * 1024 * 1024),  # 100MB
         ]
     )
     

@@ -26,8 +26,8 @@ class AggressiveBlockingTest:
         self.channel = aio.insecure_channel(
             self.server_address,
             options=[
-                ('grpc.max_send_message_length', 100 * 1024 * 1024),
-                ('grpc.max_receive_message_length', 100 * 1024 * 1024),
+                ('grpc.max_send_message_length', 1048 * 1024 * 1024),
+                ('grpc.max_receive_message_length', 1048 * 1024 * 1024),
             ]
         )
         self.stub = large_message_pb2_grpc.LargeMessageServiceStub(self.channel)
@@ -84,10 +84,10 @@ class AggressiveBlockingTest:
         
         # Start large message processing
         logger.info("1. Starting large message processing...")
-        large_message_task = asyncio.create_task(self.send_large_message(64))
+        large_message_task = asyncio.create_task(self.send_large_message(1000))
         
         # Wait a moment for processing to start
-        await asyncio.sleep(0.5)
+        # await asyncio.sleep(0.5)
         
         # Send health checks very rapidly
         logger.info("2. Sending rapid health checks...")
