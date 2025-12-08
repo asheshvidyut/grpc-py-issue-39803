@@ -28,10 +28,6 @@ class LargeMessageServicer(large_message_pb2_grpc.LargeMessageServiceServicer):
         
         logger.info(f"Processing large message {request_id}, size: {len(request.data)} bytes")
         
-        # Simulate processing time that can block the event loop
-        # This is where the blocking occurs according to the issue
-        processing_time = await self._process_large_data(request.data)
-        
         end_time = time.time()
         total_time_ms = int((end_time - start_time) * 1000)
         
@@ -59,11 +55,8 @@ class LargeMessageServicer(large_message_pb2_grpc.LargeMessageServiceServicer):
         
         logger.info(f"Processing will take {processing_time:.1f} seconds (blocking event loop)")
         
-        await asyncio.sleep(processing_time)
-        
         logger.info("Performing CPU-intensive work on large data...")
-        checksum = sum(data[i] for i in range(0, min(len(data), 1000), 100))
-        
+
         logger.info(f"Completed processing {data_size} bytes")
         
         return processing_time
